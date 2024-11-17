@@ -1,0 +1,29 @@
+# Flask: 用於後端 API 開發
+Flask==2.2.3
+
+# Flask-CORS: 用於解決跨來源請求問題
+Flask-CORS==3.1.1
+
+# pandas: 用於資料處理和計算（如相似度計算）
+pandas==1.5.3
+
+# numpy: 用於數值運算和相似度計算
+numpy==1.23.4
+
+# scikit-learn: 如果有進行機器學習模型或其他數據處理
+scikit-learn==1.2.2
+
+# flask-restful: 用於構建 REST API（若你使用）
+Flask-RESTful==0.3.9
+
+# flask-sqlalchemy: 如果你使用 SQLAlchemy 進行資料庫操作（若有使用資料庫）
+Flask-SQLAlchemy==2.5.1
+
+# requests: 用於發送 HTTP 請求（如外部 API 請求）
+requests==2.28.2
+
+# gunicorn: 用於生產環境部署
+gunicorn==20.1.0
+
+# flask-migrate: 用於資料庫遷移（若有資料庫）
+Flask-Migrate==3.1.0
