@@ -4,12 +4,16 @@
     <div>
       <label>相似度計算方式：</label>
       <select v-model="method">
-        <option value="euclidean">歐幾里德距離</option>
-        <option value="cosine">Cosine Similarity</option>
-        <option value="pcc">PCC</option>
+        <option value="ED">歐幾里德距離</option>
+        <option value="CS">Cosine Similarity</option>
+        <option value="PCC">PCC</option>
       </select>
       <label>   是否正規化：</label>
-      <input type="checkbox" v-model="normalized" />
+      <select v-model="normalized">
+        <option value="0">無正規化</option>
+        <option value="1">min-max</option>
+        <option value="2">zScore</option>
+      </select>
     </div>
     
     <div>
@@ -31,8 +35,8 @@
   export default {
     data() {
       return {
-        method: 'euclidean',
-        normalized: false,
+        method: 'ED',
+        normalized: 0,
         categories: {}
       };
     },
@@ -44,13 +48,25 @@
     methods: {
       async searchCategory(category) {
         const imgPath = this.categories[category];
+        console.log(imgPath)
         const data = {
           imgPath,
           method: this.method,
           normalized: this.normalized
         };
         const response = await axios.post('http://127.0.0.1:8066/api/search', data);
-        this.$router.push({ name: 'Results', query: { results: response.data.results } });
+        console.log(response);
+        // 將結果轉換為 JSON 字串
+        const resultsString = JSON.stringify(response.data.results);
+
+        // 使用 encodeURIComponent 編碼以防止特殊字符影響 URL
+        const encodedResults = encodeURIComponent(resultsString);
+
+        // 將編碼後的結果作為查詢參數傳遞
+        this.$router.push({
+            name: 'Results',
+            query: { results: encodedResults, precision: response.data.precision }
+        });
       }
     }
   };
